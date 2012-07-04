@@ -19,8 +19,9 @@ http://www.gnu.org/licenses/gpl.html
     console.log("Window Height:", windowHeight);
   });
 
-  $.fn.parallax = function(adjuster, speedFactor, outerHeight) {
+  $.fn.parallax = function(referenceElement, speedFactor, outerHeight) {
     var $this = $(this);
+    var $ref = $(referenceElement);
     var getHeight;
 
     var top = $this.offset().top;
@@ -37,7 +38,6 @@ http://www.gnu.org/licenses/gpl.html
     }
       
     // setup defaults if arguments aren't specified
-    if (arguments.length < 1 || adjuster === null) adjuster = 0;
     if (arguments.length < 2 || speedFactor === null) speedFactor = 0.1;
     
     // function to be called whenever the window is scrolled or resized
@@ -48,10 +48,10 @@ http://www.gnu.org/licenses/gpl.html
       $this.each(function(){
         var $element = $(this);
         var height = getHeight($element);
-        var lcolbottom = $("#lcol").height() + $("#lcol").offset().top;
+        var lcolbottom = $ref.height() + $ref.offset().top;
 
         var rcolOverflow = Math.max(0, height - windowHeight);
-        var scrollDistance = Math.max(1,$("#lcol").height() - windowHeight);
+        var scrollDistance = Math.max(1,$ref.height() - windowHeight);
 
         var speedFactor = rcolOverflow / scrollDistance;
 
@@ -63,7 +63,7 @@ http://www.gnu.org/licenses/gpl.html
         if(rcolbottom >= lcolbottom) {
           console.log("unstick");
           $this.css("position", "absolute");
-          $this.css("top", $("#lcol").height() - $element.height() );
+          $this.css("top", $ref.height() - $element.height() );
         }
         else if(rpos > 0) {
           $this.css("position", "fixed");

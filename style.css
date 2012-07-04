@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  font-family: Helvetica, "Helvetica Neue", Arial, sans-serif;
 }
 
 .clearfix:after {
@@ -49,4 +50,23 @@
   width: 47%;
   margin-left: 2%;
   float: left;
+}
+
+
+ul {
+  list-style-type: none;
+}
+
+#results li {
+  height: 199px;
+  background: rgba(255,255,255,0.2);
+  border-bottom: 1px solid black;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 40px;
+}
+
+#filters li {
+  height: 99px;
+  border-bottom: 1px solid black;
 }

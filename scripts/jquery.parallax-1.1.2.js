@@ -43,15 +43,32 @@ http://www.gnu.org/licenses/gpl.html
     function update(){
       var pos = $window.scrollTop();
       var rpos = Math.max(0, pos - top);
-      var newpos = Math.min(980, -Math.round((adjuster - rpos) * speedFactor));
+      var targetpos = Math.min(980, -Math.round((adjuster - rpos) * speedFactor));
 
       $this.each(function(){
         var $element = $(this);
         var height = getHeight($element);
+        var lcolbottom = $("#lcol").height() + $("#lcol").offset().top;
+        var rcolbottom = getHeight($element)-targetpos + pos;
 
-        $this.css('position', "relative");
-        $this.css('top', newpos + "px");
-        console.log(pos, height);
+        console.log(pos, targetpos, lcolbottom, rcolbottom);
+
+        if(rcolbottom >= lcolbottom) {
+          console.log("unstick");
+          $this.css("position", "absolute");
+          $this.css("top", $("#lcol").height() - $element.height() );
+        }
+        else if(targetpos > 0) {
+          $this.css("position", "fixed");
+          $this.css("top", -targetpos+"px");
+        }
+
+        else {
+          $this.css("position", "absolute");
+          $this.css("top", "0");
+        }
+        // $this.css('position', "relative");
+        // $this.css('top', newpos + "px");
       });
     }    
 

@@ -36,10 +36,7 @@ http://www.gnu.org/licenses/gpl.html
         return jqo.height();
       };
     }
-      
-    // setup defaults if arguments aren't specified
-    if (arguments.length < 2 || speedFactor === null) speedFactor = 0.1;
-    
+
     // function to be called whenever the window is scrolled or resized
     function update(){
       var pos = $window.scrollTop();

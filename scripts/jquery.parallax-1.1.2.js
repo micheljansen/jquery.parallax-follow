@@ -23,46 +23,57 @@ http://www.gnu.org/licenses/gpl.html
     var $this = $(this);
     var $ref = $(referenceElement);
 
-    var top = $this.offset().top;
-    console.log("init", top);
-
     // function to be called whenever the window is scrolled or resized
     function update(){
       var pos = $window.scrollTop();
+
+      // the top of the reference element (assumed to be the same as the initial top of this, but stable)
+      var top = $ref.offset().top;
+
+      // the relative scroll position past the top of the element
       var rpos = Math.max(0, pos - top);
+
 
       $this.each(function(){
         var $element = $(this);
         var height = $element.height();
-        var lcolbottom = $ref.height() + $ref.offset().top;
 
-        var rcolOverflow = Math.max(0, height - windowHeight);
+        // the bottom of the reference element, in pixels from the top of the page
+        var refbottom = $ref.height() + $ref.offset().top;
+
+        // the number of pixels that fall outside of view
+        var overflow = Math.max(0, height - windowHeight);
+
+        // the total distance it takes to scroll from the top to the bottom of the reference element
         var scrollDistance = Math.max(1,$ref.height() - windowHeight);
 
-        var speedFactor = rcolOverflow / scrollDistance;
+        // this is calculated so it will exactly line up the bottoms over the duration of scrollDistance
+        var speedFactor = overflow / scrollDistance;
 
+        // the new relative target offset for this element
         var targetpos = Math.round( rpos * speedFactor);
-        var rcolbottom = height - targetpos + pos;
 
-        console.log(pos, top, windowHeight, height, rcolOverflow, scrollDistance, speedFactor, rpos, targetpos);
+        // the new bottom of this element
+        var bottom = height - targetpos + pos;
 
-        if(rcolbottom >= lcolbottom) {
+        if(bottom >= refbottom) {
+          // stop scrolling when the bottoms align
           console.log("unstick");
           $this.css("position", "absolute");
           $this.css("top", $ref.height() - $element.height() );
         }
         else if(rpos > 0) {
+          // start following when scrolled past the top of the element
           $this.css("position", "fixed");
           $this.css("top", -targetpos+"px");
         }
         else {
+          // do nothing when above the top of the element
           $this.css("position", "absolute");
           $this.css("top", "0");
         }
-        // $this.css('position', "relative");
-        // $this.css('top', newpos + "px");
       });
-    }    
+    }
 
     $window.bind('scroll', update).resize(update);
     update();

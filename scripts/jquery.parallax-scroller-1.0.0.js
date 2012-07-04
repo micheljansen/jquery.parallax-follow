@@ -4,10 +4,9 @@
 
   $window.resize(function () {
     windowHeight = $window.height();
-    console.log("Window Height:", windowHeight);
   });
 
-  $.fn.parallax = function(referenceElement, speedFactor, outerHeight) {
+  $.fn.parallaxFollow = function(referenceElement) {
     var $this = $(this);
     var $ref = $(referenceElement);
 
@@ -46,7 +45,6 @@
 
         if(bottom >= refbottom) {
           // stop scrolling when the bottoms align
-          console.log("unstick");
           $this.css("position", "absolute");
           $this.css("top", $ref.height() - $element.height() );
         }

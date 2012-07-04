@@ -35,6 +35,7 @@
   width: 96%;
   margin-left: 2%;
   margin-bottom: 20px;
+  margin-top: 20px;
 }
 #results {
   height: 2000px;
@@ -47,8 +48,6 @@
   height: 700px;
 }
 #footer {
-  margin-top: 20px;
-  height: 200px;
 }
 
 #lcol, #rcol {

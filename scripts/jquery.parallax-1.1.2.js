@@ -18,9 +18,12 @@ http://www.gnu.org/licenses/gpl.html
     windowHeight = $window.height();
   });
 
-  $.fn.parallax = function(xpos, adjuster, speedFactor, outerHeight) {
+  $.fn.parallax = function(adjuster, speedFactor, outerHeight) {
     var $this = $(this);
     var getHeight;
+
+    var top = $this.offset().top;
+    console.log("init", top);
 
     if (outerHeight) {
       getHeight = function(jqo) {
@@ -33,27 +36,22 @@ http://www.gnu.org/licenses/gpl.html
     }
       
     // setup defaults if arguments aren't specified
-    if (arguments.length < 1 || xpos === null) xpos = "50%";
-    if (arguments.length < 2 || adjuster === null) adjuster = 0;
-    if (arguments.length < 3 || speedFactor === null) speedFactor = 0.1;
+    if (arguments.length < 1 || adjuster === null) adjuster = 0;
+    if (arguments.length < 2 || speedFactor === null) speedFactor = 0.1;
     
     // function to be called whenever the window is scrolled or resized
     function update(){
       var pos = $window.scrollTop();
+      var rpos = Math.max(0, pos - top);
+      var newpos = Math.min(980, -Math.round((adjuster - rpos) * speedFactor));
 
       $this.each(function(){
         var $element = $(this);
-        var top = $element.offset().top;
         var height = getHeight($element);
 
-        // Check if totally above or totally below viewport
-        if (top + height < pos || top > pos + windowHeight) {
-          return;
-        }
-
         $this.css('position', "relative");
-        $this.css('top', -Math.round((adjuster - pos + top) * speedFactor) + "px");
-        console.log(pos, top, height);
+        $this.css('top', newpos + "px");
+        console.log(pos, height);
       });
     }    
 

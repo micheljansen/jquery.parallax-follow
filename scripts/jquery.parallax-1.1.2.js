@@ -22,20 +22,9 @@ http://www.gnu.org/licenses/gpl.html
   $.fn.parallax = function(referenceElement, speedFactor, outerHeight) {
     var $this = $(this);
     var $ref = $(referenceElement);
-    var getHeight;
 
     var top = $this.offset().top;
     console.log("init", top);
-
-    if (outerHeight) {
-      getHeight = function(jqo) {
-        return jqo.outerHeight(true);
-      };
-    } else {
-      getHeight = function(jqo) {
-        return jqo.height();
-      };
-    }
 
     // function to be called whenever the window is scrolled or resized
     function update(){
@@ -44,7 +33,7 @@ http://www.gnu.org/licenses/gpl.html
 
       $this.each(function(){
         var $element = $(this);
-        var height = getHeight($element);
+        var height = $element.height();
         var lcolbottom = $ref.height() + $ref.offset().top;
 
         var rcolOverflow = Math.max(0, height - windowHeight);
@@ -53,7 +42,7 @@ http://www.gnu.org/licenses/gpl.html
         var speedFactor = rcolOverflow / scrollDistance;
 
         var targetpos = Math.round( rpos * speedFactor);
-        var rcolbottom = getHeight($element)-targetpos + pos;
+        var rcolbottom = height - targetpos + pos;
 
         console.log(pos, top, windowHeight, height, rcolOverflow, scrollDistance, speedFactor, rpos, targetpos);
 

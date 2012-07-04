@@ -24,32 +24,41 @@
 #filters,
 #footer {
   background-color: rgba(0,0,0,0.2);
-  margin-top: 20px;
+}
+
+#content {
+  position: relative;
 }
 
 #header, #footer {
   height: 200px;
   width: 96%;
   margin-left: 2%;
+  margin-bottom: 20px;
 }
 #results {
   height: 2000px;
 }
 #map {
   height: 300px;
+  margin-bottom: 20px;
 }
 #filters {
   height: 700px;
 }
 #footer {
   height: 200px;
-  margin-bottom: 20px;
 }
 
 #lcol, #rcol {
   width: 47%;
   margin-left: 2%;
   float: left;
+}
+
+#rcol {
+  position: absolute;
+  left: 49%;
 }
 
 

@@ -38,7 +38,9 @@
   margin-top: 20px;
 }
 #results {
+  height: 200px;
   height: 2000px;
+  overflow: hidden;
 }
 #map {
   height: 300px;
@@ -56,11 +58,26 @@
   float: left;
 }
 
+/* if the script is not active,
+ * or the right column is longer than the left column,
+ * we need it to be part of the document flow to push the footer down
+ * and we use relative positioning
+ */
 #rcol {
+  position: relative;
+}
+
+/* if the right column can be parallax scrolled,
+ * we take it out of the flow by giving it absolute positioning
+ * and moving it from the left so it ends up in the same place
+ */
+#rcol.parallax {
   position: absolute;
   left: 49%;
 }
 
+#rcol.following {
+}
 
 ul {
   list-style-type: none;
